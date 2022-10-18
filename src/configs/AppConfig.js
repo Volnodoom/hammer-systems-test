@@ -16,3 +16,18 @@ export const THEME_CONFIG = {
 	mobileNav: false,
 	currentTheme: 'light'
 };
+
+export const AppRoute = {
+	position: `${APP_PREFIX_PATH}/positions`,
+	apple: `${APP_PREFIX_PATH}/positions/apple`,
+	clients: `${APP_PREFIX_PATH}/positions/clients`,
+	summer: `${APP_PREFIX_PATH}/positions/summer`,
+	tree: `${APP_PREFIX_PATH}/positions/tree`,
+	house: `${APP_PREFIX_PATH}/house`,
+	flat: `${APP_PREFIX_PATH}/house/flat`,
+	accommodation: `${APP_PREFIX_PATH}/house/accommodation`,
+	oneBedroom: `${APP_PREFIX_PATH}/house/accommodation/one-bedroom`,
+	twoBedroom: `${APP_PREFIX_PATH}/house/accommodation/two-bedroom`,
+	studio: `${APP_PREFIX_PATH}/house/accommodation/studio`,
+	townhouse: `${APP_PREFIX_PATH}/house/townhouse`,
+}
