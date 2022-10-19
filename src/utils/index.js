@@ -227,6 +227,8 @@ class Utils {
 	static adaptServerData (serverData) {
 		const adaptedPoint = {
 			...serverData,
+			status: Utils.getRandomPositiveInteger(0, 1) === 0 ? 'active' : 'blocked',
+			role: Utils.getRandomPositiveInteger(0, 1) === 0 ? 'User' : 'Admin',
 			personalInfo: {
 				location: serverData.address.city,
 				title: serverData.address.street,
@@ -240,6 +242,15 @@ class Utils {
 		}
 
 		return adaptedPoint;
+	}
+
+	static formUpdateRequest (formData) {
+		const adaptData = JSON.stringify(formData);
+		return ({
+			method: 'PUT',
+			headers: {'Content-type': 'application/json; charset=UTF-8'},
+			body: adaptData,
+		})
 	}
 }
 

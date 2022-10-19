@@ -8,7 +8,7 @@ export const AppViews = () => {
     <Suspense fallback={<Loading cover="content"/>}>
       <Switch>
         <Route path={AppRoute.clients} component={lazy(() => import(`./clients-info`))} />
-        <Route path={AppRoute.apple} component={lazy(() => import(`./apple`))} />
+        <Route path={AppRoute.setting} component={lazy(() => import(`./setting`))} />
         <Route path={AppRoute.apple} component={lazy(() => import(`./apple`))} />
         <Route path={AppRoute.summer} component={lazy(() => import(`./summer`))} />
         <Route path={AppRoute.tree} component={lazy(() => import(`./tree`))} />

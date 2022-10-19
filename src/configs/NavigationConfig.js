@@ -24,6 +24,13 @@ const dashBoardNavTree = [{
       breadcrumb: true,
       submenu: []
     }, {
+      key: 'extra-pages-setting',
+      path: AppRoute.setting,
+      title: 'sidenav.pages.setting',
+      icon: '',
+      breadcrumb: true,
+      submenu: []
+    }, {
       key: 'apple',
       path: AppRoute.apple,
       title: 'apple',
@@ -45,8 +52,7 @@ const dashBoardNavTree = [{
       breadcrumb: true,
       submenu: []
     },
-  ]
-  }, {
+  ]}, {
   key: 'house',
   path: AppRoute.house,
   title: 'house',

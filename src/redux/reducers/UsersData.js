@@ -1,9 +1,18 @@
-import { ADD_USER_LIST_DATA, CHANGE_PROFILE_VISIBILITY, CLOSE_USER, DELETE_USER, SET_SELECTED_ID, SHOW_USER } from "redux/constants/UsersData";
+import { 
+	ADD_USER_LIST_DATA, 
+	CHANGE_PROFILE_VISIBILITY, 
+	CLOSE_USER, 
+	DELETE_USER, 
+	SET_PROFILE_UPDATE_STATUS, 
+	SET_SELECTED_ID, 
+	SHOW_USER 
+} from "redux/constants/UsersData";
 
 const initState = {
   users: [],
 	userProfileVisible: false,
-	selectedUser: null
+	selectedUser: null,
+	profileStatus: 'idl',
 }
 
 const usersData = (state = initState, action) => {
@@ -39,6 +48,11 @@ const usersData = (state = initState, action) => {
 				...state,
 				userProfileVisible: false,
 				selectedUser: null,
+			}
+		case SET_PROFILE_UPDATE_STATUS:
+			return {
+				...state,
+				profileStatus: action.payload,
 			}
 		default:
 			return state;
