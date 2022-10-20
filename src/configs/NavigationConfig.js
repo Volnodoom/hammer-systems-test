@@ -31,9 +31,9 @@ const dashBoardNavTree = [{
       breadcrumb: true,
       submenu: []
     }, {
-      key: 'apple',
-      path: AppRoute.apple,
-      title: 'apple',
+      key: 'secondTask',
+      path: AppRoute.secondTask,
+      title: 'Second task',
       icon: BehanceOutlined,
       breadcrumb: true,
       submenu: []

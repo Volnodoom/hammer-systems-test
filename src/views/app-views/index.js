@@ -9,7 +9,7 @@ export const AppViews = () => {
       <Switch>
         <Route path={AppRoute.clients} component={lazy(() => import(`./clients-info`))} />
         <Route path={AppRoute.setting} component={lazy(() => import(`./setting`))} />
-        <Route path={AppRoute.apple} component={lazy(() => import(`./apple`))} />
+        <Route path={AppRoute.apple} component={lazy(() => import(`./second-task`))} />
         <Route path={AppRoute.summer} component={lazy(() => import(`./summer`))} />
         <Route path={AppRoute.tree} component={lazy(() => import(`./tree`))} />
         <Route path={AppRoute.flat} component={lazy(() => import(`./empty-blank`))} />

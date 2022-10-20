@@ -19,7 +19,7 @@ export const THEME_CONFIG = {
 
 export const AppRoute = {
 	position: `${APP_PREFIX_PATH}/positions`,
-	apple: `${APP_PREFIX_PATH}/positions/apple`,
+	secondTask: `${APP_PREFIX_PATH}/positions/secondTask`,
 	clients: `${APP_PREFIX_PATH}/positions/clients`,
 	setting: `${APP_PREFIX_PATH}/positions/setting`,
 	summer: `${APP_PREFIX_PATH}/positions/summer`,
