@@ -19,29 +19,34 @@ const InteractiveImage = ({type, width, height, containerRef, style, updateCoord
   }
 
   const dropIt = (evt) => {
-    const imgOffsetWidth = imgRef.current.offsetWidth/2;
-    const imgOffsetHeight = imgRef.current.offsetHeight/2;
+    const imgHalfOffsetWidth = imgRef.current.offsetWidth/2;
+    const imgHalfOffsetHeight = imgRef.current.offsetHeight/2;
+
+    const generalStringCoordinateX = `${evt.pageX - containerStartX  - imgHalfOffsetWidth}px`;
+    const generalStringCoordinateY = `${evt.pageY - containerStartY - imgHalfOffsetHeight}px`;
 
     const maxElementPositionX = WIDTH_LIMIT  - imgRef.current.offsetWidth;
     const maxElementPositionY = HEIGHT_LIMIT - imgRef.current.offsetHeight;
     
-    const setElementLeft = (valueString) => imgRef.current.style.left = valueString;
-    const setElementTop = (valueString) => imgRef.current.style.top = valueString;
+    const setElementPosition = (valueStringLeft, valueStringTop) => {
+      imgRef.current.style.left = valueStringLeft;
+      imgRef.current.style.top = valueStringTop;
+    }
 
-    const isMinBorderX = evt.pageX - containerStartX < imgOffsetWidth;
-    const isMinBorderY = evt.pageY - containerStartY < imgOffsetHeight ;
-    const isMaxBorderX = evt.pageX - containerStartX > WIDTH_LIMIT - imgOffsetWidth ;
-    const isMaxBorderY = evt.pageY - containerStartY > HEIGHT_LIMIT - imgOffsetHeight ;
+    const isMinBorderX = evt.pageX - containerStartX < imgHalfOffsetWidth;
+    const isMinBorderY = evt.pageY - containerStartY < imgHalfOffsetHeight ;
+    const isMaxBorderX = evt.pageX - containerStartX > WIDTH_LIMIT - imgHalfOffsetWidth ;
+    const isMaxBorderY = evt.pageY - containerStartY > HEIGHT_LIMIT - imgHalfOffsetHeight ;
     
-    isMinBorderX && setElementLeft(ZERO_PX) && updateCoordinates({startX: 0});
-    isMinBorderY && setElementTop(ZERO_PX) && updateCoordinates({startY: 0});
-    isMaxBorderX && setElementLeft(`${maxElementPositionX}px`) && updateCoordinates({startX: maxElementPositionX});
-    isMaxBorderY && setElementTop(`${maxElementPositionY}px`) && updateCoordinates({startY: maxElementPositionY});
+    isMinBorderX && setElementPosition(ZERO_PX, generalStringCoordinateY) && updateCoordinates({startX: 0});
+    isMinBorderY && setElementPosition(generalStringCoordinateX, ZERO_PX) && updateCoordinates({startY: 0});
+    isMaxBorderX && setElementPosition(`${maxElementPositionX}px`, generalStringCoordinateY) && updateCoordinates({startX: maxElementPositionX});
+    isMaxBorderY && setElementPosition(generalStringCoordinateX, `${maxElementPositionY}px`) && updateCoordinates({startY: maxElementPositionY});
     
     !isMinBorderX && !isMinBorderY && !isMaxBorderX && !isMaxBorderY 
     && updateCoordinates({
-      startX: evt.pageX - containerStartX  - imgOffsetWidth,
-      startY: evt.pageY - containerStartY - imgOffsetHeight,
+      startX: generalStringCoordinateX,
+      startY: generalStringCoordinateY,
     })
   }
 

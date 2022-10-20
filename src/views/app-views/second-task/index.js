@@ -1,9 +1,10 @@
 import { useState, useRef } from 'react';
 import utils from 'utils';
-import { getDimension } from './utils';
+import { calculateCoordinates, getDimension } from './utils';
 import { 
 	FILE_NAME,
 	FURNITURE,
+	FurnitureTypes,
 	HEIGHT_LIMIT,
 	MAX_RANGE, 
 	MIN_RANGE,
@@ -11,6 +12,7 @@ import {
 	WIDTH_LIMIT,
 } from './constants';
 import InteractiveImage from './interactive-img';
+import { Fragment } from 'react';
 
 
 const SecondTask = () => {
@@ -20,29 +22,12 @@ const SecondTask = () => {
 
 	const containerRef = useRef(null);
 	const fileInputRef = useRef(null);
+	
 	const calculableCoordinates = useRef({
 		startCoordinateX: 0,
 		startCoordinateY: 0,
 		maxHeigh: 0,
 	});
-
-	const calculateCoordinates = (oneWidth, oneHeight) => {
-		let coordinateX = calculableCoordinates.current.startCoordinateX;
-
-		calculableCoordinates.current.startCoordinateX += Number(oneWidth);
-		
-		if(calculableCoordinates.current.maxHeigh < Number(oneHeight)) {
-			calculableCoordinates.current.maxHeigh = Number(oneHeight);
-		}
-		
-		if(calculableCoordinates.current.startCoordinateX > Number(WIDTH_LIMIT)) {
-			calculableCoordinates.current.startCoordinateX = Number(oneWidth);
-			coordinateX = 0;
-			calculableCoordinates.current.startCoordinateY += calculableCoordinates.current.maxHeigh;
-			calculableCoordinates.current.maxHeigh = 0;
-		}
-		return [coordinateX, calculableCoordinates.current.startCoordinateY];
-	}
 
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
@@ -52,7 +37,7 @@ const SecondTask = () => {
 		const width = getDimension(item)[0];
 		const height = getDimension(item)[1];
 
-		const [coordinateStartX, coordinateStartY] = calculateCoordinates(width, height);
+		const [coordinateStartX, coordinateStartY] = calculateCoordinates(calculableCoordinates, width, height);
 		
 		setObjectsInModel((prev) => (
 			[
@@ -118,23 +103,17 @@ const SecondTask = () => {
 				<form onSubmit={handleSubmit}>
 					<fieldset>
 						<legend>Please, choose elements of furniture to model your room</legend>
-						<input type='radio' id='table' name='furniture' value='table' defaultChecked/>
-						<label htmlFor='table'>
-							<img src='/img/pictures/table.png' width='50' height='50' alt='Round table' />
-							Table
-						</label>
-
-						<input type='radio' id='chair' name='furniture' value='chair'/>
-						<label htmlFor='chair'>
-							<img src='/img/pictures/chair.png' width='50' height='50' alt='Oval chair' />
-							Chair
-						</label>
-
-						<input type='radio' id='wall' name='furniture' value='wall'/>
-						<label htmlFor='wall'>
-							<img src='/img/pictures/wall.png' width='50' height='50' alt='Long brown wall' />
-							Wall
-						</label>
+						{
+							Object.values(FurnitureTypes).map((line, index) => (
+								<Fragment key={utils.getRandomPositiveInteger(MIN_RANGE, MAX_RANGE)}>
+									<input type='radio' id={line.value} name='furniture' value={line.value} defaultChecked={(index === 0 ? true : false)} />
+									<label htmlFor={line.value}>
+										<img src={`/img/pictures/${line.value}.png`} width='50' height='50' alt='' />
+										{line.title}
+									</label>
+								</Fragment>
+							))
+						}	
 					</fieldset>
 					<button type='submit'>Add to model environment</button>
 					<button type='button' onClick={handleGetLink}>Get link for download</button>
