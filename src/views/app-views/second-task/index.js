@@ -1,20 +1,25 @@
-import React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react';
 import utils from 'utils';
 import { getDimension } from './utils';
 import { 
+	FILE_NAME,
 	FURNITURE,
 	HEIGHT_LIMIT,
 	MAX_RANGE, 
 	MIN_RANGE,
+	TIMER,
 	WIDTH_LIMIT,
 } from './constants';
 import InteractiveImage from './interactive-img';
-import { useRef } from 'react';
+
 
 const SecondTask = () => {
 	const [objectsInModel, setObjectsInModel] = useState([]);
+	const [downloadLink, setDownloadLink] = useState('');
+	const [isUrlSet, setIsUrlSet] = useState(false);
+
 	const containerRef = useRef(null);
+	const fileInputRef = useRef(null);
 	const calculableCoordinates = useRef({
 		startCoordinateX: 0,
 		startCoordinateY: 0,
@@ -66,6 +71,33 @@ const SecondTask = () => {
 		))
 	}
 
+	const handleGetLink = () => {
+		const myBlob = new Blob([JSON.stringify(objectsInModel)], {type: 'application/json'});
+		const url = URL.createObjectURL(myBlob);
+
+		setDownloadLink(url);
+		setIsUrlSet(true)
+	}
+
+	const handleUrlClick = () => {
+		const removeData = () => {
+			setIsUrlSet(false);
+			window.URL.revokeObjectURL(downloadLink);
+			setDownloadLink('')
+		};
+
+		setTimeout(removeData, TIMER);
+	}
+
+	const handleFileChange = () => {
+		const file = fileInputRef.current.files[0];
+		const reader = new FileReader();
+
+		reader.readAsText(file);
+
+		reader.onload = () => setObjectsInModel(JSON.parse(reader.result));
+	}
+
 	const updateCoordinates = (id) => (coordinates) => {
 		setObjectsInModel((prev) =>  {
 			const data = [...prev];
@@ -105,7 +137,16 @@ const SecondTask = () => {
 						</label>
 					</fieldset>
 					<button type='submit'>Add to model environment</button>
+					<button type='button' onClick={handleGetLink}>Get link for download</button>
+					{
+						isUrlSet
+						?
+							<a href={downloadLink} download={FILE_NAME} onMouseUp={handleUrlClick}>Download file</a>
+						:
+							''
+					}
 				</form>
+					<input type='file' onChange={handleFileChange} ref={fileInputRef} />
 			</div>
 			<div style={{width: `${WIDTH_LIMIT}px`, height: `${HEIGHT_LIMIT}px`, position: 'relative'}} ref={containerRef}>
 				{

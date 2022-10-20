@@ -8,6 +8,8 @@ export const WALL_WIDTH = '300';
 export const WIDTH_LIMIT = 700;
 export const HEIGHT_LIMIT = 400;
 export const ZERO_PX = '0px';
+export const FILE_NAME = 'furniture.text';
+export const TIMER = 1000;
 
 export const FurnitureTypes = {
 	table: 'table',

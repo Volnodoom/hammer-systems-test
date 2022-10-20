@@ -17,6 +17,13 @@ const dashBoardNavTree = [{
   breadcrumb: false,
   submenu: [
     {
+      key: 'secondTask',
+      path: AppRoute.secondTask,
+      title: 'Second task',
+      icon: BehanceOutlined,
+      breadcrumb: true,
+      submenu: []
+    }, {
       key: 'clients',
       path: AppRoute.clients,
       title: 'Clients',
@@ -28,13 +35,6 @@ const dashBoardNavTree = [{
       path: AppRoute.setting,
       title: 'sidenav.pages.setting',
       icon: '',
-      breadcrumb: true,
-      submenu: []
-    }, {
-      key: 'secondTask',
-      path: AppRoute.secondTask,
-      title: 'Second task',
-      icon: BehanceOutlined,
       breadcrumb: true,
       submenu: []
     }, {
