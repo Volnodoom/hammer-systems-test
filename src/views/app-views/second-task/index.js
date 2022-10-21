@@ -99,41 +99,61 @@ const SecondTask = () => {
 
 	return (
 		<div>
-			<div>
-				<form onSubmit={handleSubmit}>
-					<fieldset>
-						<legend>Please, choose elements of furniture to model your room</legend>
+			<div className="custom-test__first">
+				<form onSubmit={handleSubmit} className="custom-test">
+					<fieldset className="custom-test__fieldset">
+						<legend className="custom-test">Construct your room</legend>
 						{
 							Object.values(FurnitureTypes).map((line, index) => (
 								<Fragment key={utils.getRandomPositiveInteger(MIN_RANGE, MAX_RANGE)}>
-									<input type='radio' id={line.value} name='furniture' value={line.value} defaultChecked={(index === 0 ? true : false)} />
-									<label htmlFor={line.value}>
-										<img src={`/img/pictures/${line.value}.png`} width='50' height='50' alt='' />
+									<input 
+										className="custom-test__radio" 
+										type="radio" id={line.value} 
+										name="furniture" 
+										value={line.value} 
+										defaultChecked={(index === 0 ? true : false)} 
+									/>
+									<label className="custom-test__label" htmlFor={line.value}>
+										<img 
+											className="custom-test__label-img" 
+											src={`/img/pictures/${line.value}.png`} 
+											width="50" 
+											height="50" 
+											alt="" 
+										/>
 										{line.title}
 									</label>
 								</Fragment>
 							))
 						}	
 					</fieldset>
-					<button type='submit'>Add to model environment</button>
-					<button type='button' onClick={handleGetLink}>Get link for download</button>
+					
+					<button className="custom-test__button custom-test__button--simple" type="submit">Add to model environment</button>
+					<button className="custom-test__button" type="button" onClick={handleGetLink}>Get link for download</button>
+					<input className="custom-test__visually-hidden" type="file" id="file-input" onChange={handleFileChange} ref={fileInputRef} />
+					<label className="custom-test__button custom-test__button--upload" htmlFor="file-input">Upload File</label>
 					{
 						isUrlSet
 						?
-							<a href={downloadLink} download={FILE_NAME} onMouseUp={handleUrlClick}>Download file</a>
+							<a className="custom-test__button custom-test__button--download" 
+								href={downloadLink} 
+								download={FILE_NAME} 
+								onMouseUp={handleUrlClick}
+							>
+								Download file
+							</a>
 						:
 							''
 					}
 				</form>
-					<input type='file' onChange={handleFileChange} ref={fileInputRef} />
 			</div>
-			<div style={{width: `${WIDTH_LIMIT}px`, height: `${HEIGHT_LIMIT}px`, position: 'relative'}} ref={containerRef}>
+			
+			<div className="custom-test__second" style={{width: `${WIDTH_LIMIT}px`, height: `${HEIGHT_LIMIT}px` }} ref={containerRef}>
 				{
 					objectsInModel.length > 0
 					?
-						objectsInModel.map((line) => {
-							
-							return <InteractiveImage 
+						objectsInModel.map((line) => (
+							 <InteractiveImage 
 								style={{left: line.coordinates.startX, top: line.coordinates.startY}}
 								type={line.type}
 								width={line.width} 
@@ -142,9 +162,9 @@ const SecondTask = () => {
 								updateCoordinates={updateCoordinates(line.id)}
 								containerRef={containerRef}
 							/>
-						})
+						))
 					:
-						''
+						<p className="custom-test__paragraph">No models in environment</p>
 				}
 			</div>
 		</div>

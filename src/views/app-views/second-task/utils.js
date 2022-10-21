@@ -34,3 +34,8 @@ export const calculateCoordinates = (ref, oneWidth, oneHeight) => {
   }
   return [coordinateX, ref.current.startCoordinateY];
 }
+
+export const getImgHalfOffsetWidth = (ref) => ref.current.offsetWidth/2;
+export const getImgHalfOffsetHeight = (ref) => ref.current.offsetHeight/2;
+export const getRelativeCoordinateX = (evtObject, containerCoordinate) => evtObject.clientX - containerCoordinate;
+export const getRelativeCoordinateY = (evtObject, containerCoordinate) => evtObject.clientY - containerCoordinate;
