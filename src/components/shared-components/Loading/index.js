@@ -3,20 +3,21 @@ import { Spin } from 'antd';
 import PropTypes from 'prop-types'
 import { LoadingOutlined } from '@ant-design/icons';
 
-const Icon = <LoadingOutlined style={{ fontSize: 35 }} spin />
+const Icon = (size) => <LoadingOutlined style={{ fontSize: size ? size : 35 }} spin />
 
 const Loading = (props) => {
-	const { align, cover } = props
+	const { align, cover } = props;
+	const iconSize = props.iconSize || null;
 	return (
 		<div className={`loading text-${align} cover-${cover}`}>
-			<Spin indicator={Icon} />
+			<Spin indicator={Icon(iconSize)} />
 		</div>
 	)
 }
 
 Loading.propTypes = {
 	size: PropTypes.string,
-	cover: PropTypes.string
+	cover: PropTypes.string,
 }
 
 Loading.defaultProps = {
