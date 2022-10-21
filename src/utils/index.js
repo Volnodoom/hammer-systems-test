@@ -9,7 +9,7 @@ class Utils {
 		let initials = name.match(/\b\w/g) || [];
 		return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
 	}
-
+ 
 	/**
 	 * Get current path related object from Navigation Tree
 	 * @param {Array} navTree - Navigation Tree from directory 'configs/NavigationConfig'
@@ -210,6 +210,47 @@ class Utils {
 			}
 		}
 		return breakpoints
+	}
+	// 17/11/1993
+/**
+ * 
+ *@param {Number} valueA - any positive Integer number, sequence of numbers does not matter
+ *@param {Number} valueB - any positive Integer number, sequence of numbers does not matter
+ */
+	static getRandomPositiveInteger = function (valueA, valueB) {
+		const lower = Math.ceil (Math.min (Math.abs (valueA), Math.abs (valueB)));
+		const upper = Math.floor (Math.max (Math.abs (valueA), Math.abs (valueB)));
+		const result = Math.random () * (upper - lower + 1) + lower;
+		return Math.floor (result);
+	};
+
+	static adaptServerData (serverData) {
+		const adaptedPoint = {
+			...serverData,
+			status: Utils.getRandomPositiveInteger(0, 1) === 0 ? 'active' : 'blocked',
+			role: Utils.getRandomPositiveInteger(0, 1) === 0 ? 'User' : 'Admin',
+			personalInfo: {
+				location: serverData.address.city,
+				title: serverData.address.street,
+				birthday: `${Utils.getRandomPositiveInteger(1, 28)}/${Utils.getRandomPositiveInteger(1, 12)}/${Utils.getRandomPositiveInteger(1990, 2020)}`,
+				phoneNumber: serverData.phone,
+				facebook: '',
+				twitter: '',
+				instagram: '',
+				site: serverData.website,
+			}
+		}
+
+		return adaptedPoint;
+	}
+
+	static formUpdateRequest (formData) {
+		const adaptData = JSON.stringify(formData);
+		return ({
+			method: 'PUT',
+			headers: {'Content-type': 'application/json; charset=UTF-8'},
+			body: adaptData,
+		})
 	}
 }
 
